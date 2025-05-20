@@ -24,7 +24,9 @@ test_acc, cm, class_names = evaluate_model(model, test_loader, device=device, cl
 
 # Sonuçları görselleştir
 plot_results(acc_list, loss_list, cm, class_names)
+
 '''
+
 from src.model import CNNModel 
 from src.dataset import get_dataloaders
 from src.inference import predict_and_show
@@ -45,4 +47,3 @@ _, test_loader = get_dataloaders()
 # Tahminleri göster (örneğin 10 görsel için)
 predict_and_show(model, test_loader, device=device, num_images=5)
 
-''''''

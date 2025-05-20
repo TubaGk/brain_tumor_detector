@@ -2,7 +2,7 @@ from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 import os
 
-def get_dataloaders(data_dir='data/raw', batch_size=16, img_size=128):
+def get_dataloaders(data_dir='data/raw', batch_size=16, img_size=224):
     train_dir = os.path.join(data_dir, 'train')
     test_dir = os.path.join(data_dir, 'test')
 
