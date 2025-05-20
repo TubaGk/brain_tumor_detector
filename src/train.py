@@ -8,6 +8,9 @@ def train_model(model, train_loader, test_loader, num_epochs=10, lr=0.001, devic
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=lr)
 
+    acc_list = []
+    loss_list = []
+
     for epoch in range(num_epochs):
         model.train()
         running_loss = 0.0
@@ -28,8 +31,12 @@ def train_model(model, train_loader, test_loader, num_epochs=10, lr=0.001, devic
             total += labels.size(0)
             correct += (predicted == labels).sum().item()
 
+        epoch_loss = running_loss / len(train_loader)
         accuracy = 100 * correct / total
-        print(f"Epoch [{epoch+1}/{num_epochs}], Loss: {running_loss:.4f}, Accuracy: {accuracy:.2f}%")
+        loss_list.append(epoch_loss)
+        acc_list.append(accuracy)
+
+        print(f"Epoch [{epoch+1}/{num_epochs}], Loss: {epoch_loss:.4f}, Accuracy: {accuracy:.2f}%")
 
     print("Eğitim tamamlandı.")
-    return model
+    return model, acc_list, loss_list
