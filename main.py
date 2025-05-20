@@ -1,4 +1,4 @@
-'''from src.dataset import get_dataloaders
+"""from src.dataset import get_dataloaders
 from src.model import CNNModel
 from src.train import train_model
 from evaluate import evaluate_model, plot_results
@@ -25,8 +25,7 @@ test_acc, cm, class_names = evaluate_model(model, test_loader, device=device, cl
 # Sonuçları görselleştir
 plot_results(acc_list, loss_list, cm, class_names)
 
-'''
-
+"""
 from src.model import CNNModel 
 from src.dataset import get_dataloaders
 from src.inference import predict_and_show

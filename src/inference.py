@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import torchvision.transforms as transforms
 import random
 
-classes = ['no_tumor', 'pituitary', 'glioma', 'meningioma']
+classes = ['glioma', 'meningioma', 'notumor', 'pituitary']
 
 def predict_and_show(model, test_loader, device="cpu", num_images=10):
     model.eval()
