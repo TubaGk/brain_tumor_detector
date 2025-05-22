@@ -9,7 +9,7 @@ def predict_and_show(model, test_loader, device="cpu", num_images=10):
     model.eval()
     model.to(device)
 
-    # Tüm test verisini bir kerede topla (önemli!)
+
     all_images = []
     all_labels = []
 
@@ -18,11 +18,11 @@ def predict_and_show(model, test_loader, device="cpu", num_images=10):
             all_images.extend(images)
             all_labels.extend(labels)
 
-    # Rastgele indeks seç
+
     indices = random.sample(range(len(all_images)), num_images)
 
     for idx in indices:
-        image = all_images[idx].unsqueeze(0).to(device)  # [1, C, H, W]
+        image = all_images[idx].unsqueeze(0).to(device)
         label = all_labels[idx]
 
         output = model(image)

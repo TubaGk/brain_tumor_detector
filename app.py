@@ -4,19 +4,18 @@ from torchvision import transforms
 from PIL import Image
 import numpy as np
 import cv2
-from src.model import CNNModel  # src/model.py içindeki model sınıfı
+from src.model import CNNModel
 
-# Sınıf isimleri
 classes = ['glioma', 'meningioma', 'notumor', 'pituitary']
 
-# Modeli yükle
+
 def load_model():
     model = CNNModel()
     model.load_state_dict(torch.load("model_weights.pth", map_location=torch.device('cpu')))
     model.eval()
     return model
 
-# Grad-CAM fonksiyonu
+
 import numpy as np
 import cv2
 import torchvision.transforms as transforms
@@ -54,27 +53,26 @@ def generate_gradcam(model, img_tensor):
     forward_handle.remove()
     backward_handle.remove()
 
-    # **Normalize edilmiş inputu tersine çevirme**
-    # Senin transform normalize kısmın mean=0.5, std=0.5
+
     unnormalize = transforms.Normalize(
         mean=[-0.5 / 0.5, -0.5 / 0.5, -0.5 / 0.5],
         std=[1/0.5, 1/0.5, 1/0.5]
     )
-    # batch ve channel boyutu
-    input_vis = unnormalize(img_tensor.squeeze()).permute(1, 2, 0).cpu().numpy()
-    input_vis = np.clip(input_vis, 0, 1)  # 0-1 aralığında
 
-    # Görüntüyü 0-255 aralığına getir
+    input_vis = unnormalize(img_tensor.squeeze()).permute(1, 2, 0).cpu().numpy()
+    input_vis = np.clip(input_vis, 0, 1)
+
+
     original = np.uint8(255 * input_vis)
     heatmap = cv2.applyColorMap(np.uint8(255 * cam), cv2.COLORMAP_JET)
 
-    # Overlay işlemi (ağırlıklı toplama)
+
     overlay = cv2.addWeighted(original, 0.5, heatmap, 0.5, 0)
 
     return overlay
 
 
-# Streamlit arayüzü
+
 def main():
     st.set_page_config(page_title="Beyin Tümörü Tespiti", layout="centered")
     st.title("🧠 Beyin MRI Tümör Tespiti")

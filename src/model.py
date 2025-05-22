@@ -9,12 +9,12 @@ class CNNModel(nn.Module):
         self.pool = nn.MaxPool2d(2, 2)
         self.conv2 = nn.Conv2d(16, 32, 3, padding=1)
 
-        # Fully connected layer giriş boyutunu dummy input ile hesapla
+
         with torch.no_grad():
-            dummy = torch.zeros(1, 3, 224, 224)  # 224x224 giriş varsayıldı
+            dummy = torch.zeros(1, 3, 224, 224)
             x = self.pool(F.relu(self.conv1(dummy)))
             x = self.pool(F.relu(self.conv2(x)))
-            n_size = x.numel()  # Tüm eleman sayısı (batch hariç)
+            n_size = x.numel()
 
         self.fc1 = nn.Linear(n_size, 128)
         self.fc2 = nn.Linear(128, num_classes)
