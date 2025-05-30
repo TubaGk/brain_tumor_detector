@@ -75,10 +75,10 @@ def generate_gradcam(model, img_tensor):
 
 def main():
     st.set_page_config(page_title="Beyin Tümörü Tespiti", layout="centered")
-    st.title("🧠 Beyin MRI Tümör Tespiti")
+    st.title("Beyin MRI Tümör Tespiti")
     st.write("Bir MRI görüntüsü yükleyin. Model tümör tipini tahmin edecek ve Grad-CAM ile görselleştirecek.")
 
-    uploaded_file = st.file_uploader("🖼️ MRI Görüntüsü Seçin", type=["jpg", "png", "jpeg"])
+    uploaded_file = st.file_uploader("MRI Görüntüsü Seçin", type=["jpg", "png", "jpeg"])
 
     if uploaded_file is not None:
         image = Image.open(uploaded_file).convert("RGB")
@@ -94,7 +94,7 @@ def main():
 
         model = load_model()
 
-        with st.spinner("🧠 Tahmin yapılıyor..."):
+        with st.spinner("Tahmin yapılıyor..."):
             output = model(input_tensor)
             pred = torch.softmax(output, dim=1)
             pred_class = torch.argmax(pred).item()
@@ -106,12 +106,12 @@ def main():
             overlay = cv2.addWeighted(original, 0.5, heatmap, 0.5, 0)
 
             label = classes[pred_class]
-            st.markdown(f"### 🔍 Tahmin: **{label.upper()}**")
-            st.markdown(f"### 📊 Güven Skoru: **%{prob * 100:.2f}**")
-            st.image(overlay, caption="Grad-CAM ile Görselleştirme", use_column_width=True)
-
+            st.markdown(f"### Tahmin: **{label.upper()}**")
             for i, class_name in enumerate(classes):
                 st.write(f"{class_name}: {pred[0, i].item() * 100:.2f}%")
+            st.image(overlay, caption="Grad-CAM ile Görselleştirme", use_column_width=True)
+
+
 
 
 if __name__ == "__main__":
